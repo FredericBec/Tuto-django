@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="update models">
+    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="Add new views">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,6 +47,11 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\BecF\Documents\python-workspace\Tuto-Django\mysite\polls\templates\polls" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -157,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739865984830</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Add new views">
+      <option name="closed" value="true" />
+      <created>1739866468287</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1739866468287</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -173,6 +188,7 @@
     <MESSAGE value="Add report part 2 admin panel" />
     <MESSAGE value="update report and practice django shell" />
     <MESSAGE value="update models" />
-    <option name="LAST_COMMIT_MESSAGE" value="update models" />
+    <MESSAGE value="Add new views" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add new views" />
   </component>
 </project>
