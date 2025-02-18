@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="Add report part 2 admin panel">
+    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="update report and practice django shell">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report/report.md" beforeDir="false" afterPath="$PROJECT_DIR$/report/report.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -143,7 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739798798325</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="update report and practice django shell">
+      <option name="closed" value="true" />
+      <created>1739863181318</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1739863181318</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -157,6 +165,7 @@
     <MESSAGE value="Create admin panel" />
     <MESSAGE value="Add class QuestionAdmin and ChoiceAdmin" />
     <MESSAGE value="Add report part 2 admin panel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add report part 2 admin panel" />
+    <MESSAGE value="update report and practice django shell" />
+    <option name="LAST_COMMIT_MESSAGE" value="update report and practice django shell" />
   </component>
 </project>

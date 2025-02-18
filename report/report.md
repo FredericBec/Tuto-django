@@ -55,7 +55,7 @@ Création du projet, initialisation du serveur de développement et création de
     >>> from polls.models import Choice, Question
     >>> from django.utils import timezone         
     >>> for question in Question.objects.all():
-    ...     print(question)                     
+    ...     print(question.id, question.question_text, question.pub_date)                     
     ...
     What's up? 2025-02-17 10:03:23+00:00
     What is the next movie you will go see at the cinema? 2025-02-12 10:20:06+00:00
@@ -143,7 +143,8 @@ Création du projet, initialisation du serveur de développement et création de
    ```
 8. Cherchez toutes les questions contenant un mot dans le texte des choix :
     ```
-   
+    >>> Question.objects.filter(choice__choice_text__contains="ra")
+    <QuerySet [<Question: What is the next movie you will go see at the cinema?>, <Question: What pet do you have?>]>
    ```
    
 9. Créer une question via le shell :
