@@ -1,0 +1,22 @@
+{% if has_choices %}
+    <table>
+        <thead>
+            <tr>
+                <th>Choix</th>
+                <th>Nombre de votes</th>
+                <th>Fréquence de votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for choice in has_choices %}
+                <tr>
+                    <td>{{choice.0}}</td>
+                    <td>{{choice.1}}</td>
+                    <td>{{choice.2|floatformat:0}} %</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Pas de résultats</p>
+{% endif %}

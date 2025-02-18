@@ -188,4 +188,86 @@ Création du projet, initialisation du serveur de développement et création de
     Do you work full time at office?
     >>>
     ```
-            
+
+### Part three
+
+Modification des vues puis ajout des templates index et detail
+
+### Part Four
+
+Ajout d'un formulaire simple et modifications des vues en vue génériques
+
+#### Exos part 3 and 4
+1. Ajout de la date de publication dans index.html :
+    ```
+   <span>{{question.pub_date}}</span>
+   ```
+
+2. Ajout de la page all qui liste tous les sondages :
+    Ajout d'un template all.html puis modification de l'index.html. 
+    Ajout d'une view AllView et modification des urls. 
+    ```
+    {% if latest_question_list %}
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Question</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in latest_question_list %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>
+                        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+    ```
+
+3. Modifier all.html pour inclure un template frequency :
+    Ajout d'un template frequency.html et d'une vue générique FrequencyView puis ajout de l'url.
+    Modification de la méthode get_choices() pour gérer le cas où le total est égale à 0.
+   ```
+    class FrequencyView(generic.DetailView):
+    model = Question
+    template_name = "polls/frequency.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["has_choices"] = self.object.get_choices()
+        return context
+    ```
+    ```
+    path("<int:pk>/frequency/", views.FrequencyView.as_view(), name="frequency"),
+    ```
+    ```
+    {% if has_choices %}
+    <table>
+        <thead>
+            <tr>
+                <th>Choix</th>
+                <th>Nombre de votes</th>
+                <th>Fréquence de votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for choice in has_choices %}
+                <tr>
+                    <td>{{choice.0}}</td>
+                    <td>{{choice.1}}</td>
+                    <td>{{choice.2|floatformat:0}} %</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>Pas de résultats</p>
+    {% endif %}
+    ```

@@ -6,8 +6,12 @@ from django.views import generic
 from .models import Question, Choice
 
 
-class IndexView(generic.ListView):
+class IndexView(generic.TemplateView):
     template_name = "polls/index.html"
+
+
+class AllView(generic.ListView):
+    template_name = "polls/all.html"
     context_object_name = "latest_question_list"
 
     def get_queryset(self):
@@ -23,6 +27,16 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
+
+class FrequencyView(generic.DetailView):
+    model = Question
+    template_name = "polls/frequency.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["has_choices"] = self.object.get_choices()
+        return context
 
 
 def vote(request, question_id):
