@@ -1,0 +1,21 @@
+<table>
+    <thead>
+        <tr>
+            <th>Nombre total de sondage</th>
+            <th>Nombre total de choix</th>
+            <th>Nombre total de votes</th>
+            <th>Moyenne de votes</th>
+            <th>Dernière question enregistrée</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ total_questions }}</td>
+            <td>{{ total_choices }}</td>
+            <td>{{ total_votes.votes__sum }}</td>
+            <td>{{ avg_votes.votes__avg }}</td>
+            <td>{{ last_question_recorded.question_text }}</td>
+
+        </tr>
+    </tbody>
+</table>

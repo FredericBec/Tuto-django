@@ -271,3 +271,61 @@ Ajout d'un formulaire simple et modifications des vues en vue génériques
         <p>Pas de résultats</p>
     {% endif %}
     ```
+
+4. Ajout d'une page statistics :
+    nouvelle vue statistics
+    ```
+   def statistics(request):
+    total_questions = Question.objects.count()
+    total_choices = Choice.objects.count()
+    total_votes = Choice.objects.aggregate(Sum("votes"))
+    avg_votes = Choice.objects.aggregate(Avg("votes", default=0))
+    last_id = Question.objects.aggregate(id=Max("id"))
+    last_question_recorded = Question.objects.get(pk=last_id.get("id"))
+
+    context = {
+        "total_questions": total_questions,
+        "total_choices": total_choices,
+        "total_votes": total_votes,
+        "avg_votes": avg_votes,
+        "last_question_recorded": last_question_recorded
+    }
+
+    return render(request, "polls/statistics.html", context)
+   ```
+   
+   Ajout dans index.html
+   ```
+   <a href="{% url 'polls:statistics' %}">Statistiques</a>
+   ```
+   
+   statistics.html
+   ```
+   <table>
+    <thead>
+        <tr>
+            <th>Nombre total de sondage</th>
+            <th>Nombre total de choix</th>
+            <th>Nombre total de votes</th>
+            <th>Moyenne de votes</th>
+            <th>Dernière question enregistrée</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ total_questions }}</td>
+            <td>{{ total_choices }}</td>
+            <td>{{ total_votes.votes__sum }}</td>
+            <td>{{ avg_votes.votes__avg }}</td>
+            <td>{{ last_question_recorded.question_text }}</td>
+
+        </tr>
+    </tbody>
+    </table>
+   ```
+   Ajout de l'url dans polls.url.py
+   ```
+   path("statistics/", views.statistics, name="statistics"),
+   ```
+
+5. 

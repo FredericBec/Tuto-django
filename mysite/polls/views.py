@@ -1,3 +1,6 @@
+from email.policy import default
+
+from django.db.models import Sum, Avg, Max
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -66,3 +69,22 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+
+
+def statistics(request):
+    total_questions = Question.objects.count()
+    total_choices = Choice.objects.count()
+    total_votes = Choice.objects.aggregate(Sum("votes"))
+    avg_votes = Choice.objects.aggregate(Avg("votes", default=0))
+    last_id = Question.objects.aggregate(id=Max("id"))
+    last_question_recorded = Question.objects.get(pk=last_id.get("id"))
+
+    context = {
+        "total_questions": total_questions,
+        "total_choices": total_choices,
+        "total_votes": total_votes,
+        "avg_votes": avg_votes,
+        "last_question_recorded": last_question_recorded
+    }
+
+    return render(request, "polls/statistics.html", context)
