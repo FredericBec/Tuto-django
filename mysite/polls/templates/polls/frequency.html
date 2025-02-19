@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
 {% if has_choices %}
     <table>
         <thead>
@@ -20,3 +25,4 @@
 {% else %}
     <p>Pas de résultats</p>
 {% endif %}
+{% endblock %}

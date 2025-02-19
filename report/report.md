@@ -437,3 +437,46 @@ Personnalisation du formulaire d'administration pour les questions
 ### Part eight
 
 Ajout de Django Debug Toolbar
+
+## Complement
+
+### Héritage de gabarits
+
+Ajout de base.html dans un répertoire templates à la racine du projet
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <title>{% block title %}Bienvenue sur mon site{% endblock %}</title>
+</head>
+
+<body>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    <main id="content">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
+```
+
+Ajout des balises dans chaque templates
+```
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="poll_container">
+        <h1>Bienvenue sur mon application de sondage</h1>
+
+        <a href="{% url 'polls:all' %}">Questions</a>
+        <a href="{% url 'polls:statistics' %}">Statistiques</a>
+        <a href="{% url 'polls:add' %}">Créer un sondage</a>
+    </div>
+{% endblock %}
+```

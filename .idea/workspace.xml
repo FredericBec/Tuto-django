@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="Add css">
+    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="Add DjDT and update admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/mysite/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/mysite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/mysite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/polls/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/static/polls/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/static/polls/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/all.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/frequency.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/frequency.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/poll_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/poll_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/statistics.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report/report.md" beforeDir="false" afterPath="$PROJECT_DIR$/report/report.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,6 +68,8 @@
       <recent name="C:\Users\BecF\Documents\python-workspace\Tuto-Django\mysite\polls\templates\admin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\BecF\Documents\python-workspace\Tuto-Django\mysite" />
+      <recent name="C:\Users\BecF\Documents\python-workspace\Tuto-Django\mysite\mysite\templates" />
       <recent name="C:\Users\BecF\Documents\python-workspace\Tuto-Django\mysite\polls\templates\polls" />
     </key>
   </component>
@@ -251,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739960314789</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Add DjDT and update admin">
+      <option name="closed" value="true" />
+      <created>1739963214394</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1739963214394</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -276,6 +290,7 @@
     <MESSAGE value="Add poll form" />
     <MESSAGE value="Add tests and update files" />
     <MESSAGE value="Add css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add css" />
+    <MESSAGE value="Add DjDT and update admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add DjDT and update admin" />
   </component>
 </project>

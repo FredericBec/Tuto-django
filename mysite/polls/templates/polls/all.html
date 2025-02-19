@@ -1,24 +1,32 @@
-{% if latest_question_list %}
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Question</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for question in latest_question_list %}
-                <tr>
-                    <td>{{ question.id }}</td>
-                    <td>
-                        <a href="{% url 'polls:frequency' question.id %}">{{ question.question_text }}</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% extends "base.html" %}
 
-<a href="{% url 'polls:add' %}">Ajouter un sondage</a>
+{% block title %}Sondage{% endblock %}
+
+{% block content %}
+<div class="poll_list">
+    {% if latest_question_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Question</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in latest_question_list %}
+                    <tr>
+                        <td>{{ question.id }}</td>
+                        <td>
+                            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
+    <a href="{% url 'polls:add' %}">Ajouter un sondage</a>
+</div>
+{% endblock %}

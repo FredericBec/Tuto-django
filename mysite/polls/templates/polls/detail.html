@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Détail de la question {{question.id}}{% endblock %}
+
+{% block content %}
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
 <fieldset>
@@ -10,3 +15,4 @@
 </fieldset>
 <input type="submit" value="Vote">
 </form>
+{% endblock %}

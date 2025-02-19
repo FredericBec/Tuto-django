@@ -1,11 +1,13 @@
-{% load static %}
+{% extends "base.html" %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{% block title %}Home{% endblock %}
 
-<div class="poll_container">
-    <h1>Bienvenue sur mon application de sondage</h1>
+{% block content %}
+    <div class="poll_container">
+        <h1>Bienvenue sur mon application de sondage</h1>
 
-    <a href="{% url 'polls:all' %}">Questions</a>
-    <a href="{% url 'polls:statistics' %}">Statistiques</a>
-    <a href="{% url 'polls:add' %}">Créer un sondage</a>
-</div>
+        <a href="{% url 'polls:all' %}">Questions</a>
+        <a href="{% url 'polls:statistics' %}">Statistiques</a>
+        <a href="{% url 'polls:add' %}">Créer un sondage</a>
+    </div>
+{% endblock %}

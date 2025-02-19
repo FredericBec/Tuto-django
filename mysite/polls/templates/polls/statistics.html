@@ -1,21 +1,27 @@
-<table>
-    <thead>
-        <tr>
-            <th>Nombre total de sondage</th>
-            <th>Nombre total de choix</th>
-            <th>Nombre total de votes</th>
-            <th>Moyenne de votes</th>
-            <th>Dernière question enregistrée</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{ total_questions }}</td>
-            <td>{{ total_choices }}</td>
-            <td>{{ total_votes.votes__sum }}</td>
-            <td>{{ avg_votes.votes__avg }}</td>
-            <td>{{ last_question_recorded.question_text }}</td>
+{% extends "base.html" %}
 
-        </tr>
-    </tbody>
-</table>
+{% block title %}Statistiques{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Statistiques des sondages</h2>
+
+    <div>
+        <div>
+            <p>Nombre total de sondages : {{ total_questions }}</p>
+        </div>
+        <div>
+            <p>Nombre total de choix : {{ total_choices }}</p>
+        </div>
+        <div>
+            <p>Nombre total de votes : {{ total_votes.votes__sum }}</p>
+        </div>
+        <div>
+            <p>Moyenne de votes : {{ avg_votes.votes__avg }}</p>
+        </div>
+        <div>
+            <p>Dernière question enregistrée : {{ last_question_recorded.question_text }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
