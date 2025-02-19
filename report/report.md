@@ -430,3 +430,10 @@ Ajout des tests unitaires dans l'application
 
 Ajout du style dans la page d'index
 
+### Part seven
+
+Personnalisation du formulaire d'administration pour les questions
+
+### Part eight
+
+Ajout de Django Debug Toolbar
