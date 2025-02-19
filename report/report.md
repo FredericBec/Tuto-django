@@ -426,3 +426,7 @@ Ajout d'un formulaire simple et modifications des vues en vue génériques
 
 Ajout des tests unitaires dans l'application
 
+### Part six
+
+Ajout du style dans la page d'index
+
