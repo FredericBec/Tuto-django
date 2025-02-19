@@ -421,3 +421,8 @@ Ajout d'un formulaire simple et modifications des vues en vue génériques
       <input type="submit" value="Add">
     </form>
    ```
+
+### Part five
+
+Ajout des tests unitaires dans l'application
+
