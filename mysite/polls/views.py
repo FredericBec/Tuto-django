@@ -4,8 +4,10 @@ from django.db.models import Sum, Avg, Max
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views import generic
 
+from .form import PollForm
 from .models import Question, Choice
 
 
@@ -88,3 +90,25 @@ def statistics(request):
     }
 
     return render(request, "polls/statistics.html", context)
+
+
+def get_question(request):
+    if request.method == "POST":
+        form = PollForm(request.POST)
+
+        if form.is_valid():
+            question_text = form.cleaned_data["question_text"]
+            choice_texts = request.POST.getlist("choice_text[]")
+
+            new_question = Question(question_text=question_text, pub_date=timezone.now())
+            new_question.save()
+            for choice_text in choice_texts:
+                if choice_text.strip():
+                    new_question.choice_set.create(question=new_question, choice_text=choice_text, votes=0)
+
+            return HttpResponseRedirect(reverse("polls:all"))
+
+    else:
+        form = PollForm()
+
+    return render(request, "polls/poll_form.html", {"form": form})

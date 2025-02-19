@@ -1,0 +1,29 @@
+<form action="{% url 'polls:add' %}" method="post">
+    {% csrf_token %}
+    <div class="fieldWrapper">
+        {{ form.question_text.errors }}
+        {{ form.question_text.label_tag }}
+        {{ form.question_text }}
+    </div>
+    <div class="fieldWrapper">
+        <label for="choice1">Choix 1:</label>
+        <input type="text" name="choice_text[]" id="choice1">
+    </div>
+    <div class="fieldWrapper">
+        <label for="choice2">Choix 2:</label>
+        <input type="text" name="choice_text[]" id="choice2">
+    </div>
+    <div class="fieldWrapper">
+        <label for="choice3">Choix 3:</label>
+        <input type="text" name="choice_text[]" id="choice3">
+    </div>
+    <div class="fieldWrapper">
+        <label for="choice4">Choix 4:</label>
+        <input type="text" name="choice_text[]" id="choice4">
+    </div>
+    <div class="fieldWrapper">
+        <label for="choice4">Choix 5:</label>
+        <input type="text" name="choice_text[]" id="choice5">
+    </div>
+    <input type="submit" value="Add">
+</form>

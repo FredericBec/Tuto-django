@@ -328,4 +328,96 @@ Ajout d'un formulaire simple et modifications des vues en vue génériques
    path("statistics/", views.statistics, name="statistics"),
    ```
 
-5. 
+5. Ajout d'un formulaire pour ajouter une question :
+    ```
+   from django import forms
+
+
+    class PollForm(forms.Form):
+    question_text = forms.CharField(label="Question", max_length=100)
+
+   ```
+   ```
+   <form action="{% url 'polls:add' %}" method="post">
+    {% csrf_token %}
+    <div class="fieldWrapper">
+        {{ form.question_text.errors }}
+        {{ form.question_text.label_tag }}
+        {{ form.question_text }}
+    </div>
+   </form>
+   ```
+   ```
+   def get_question(request):
+    if request.method == "POST":
+        form = PollForm(request.POST)
+
+        if form.is_valid():
+            question_text = form.cleaned_data["question_text"]
+
+            new_question = Question(question_text=question_text, pub_date=timezone.now())
+            new_question.save()
+            
+
+            return HttpResponseRedirect(reverse("polls:all"))
+
+    else:
+        form = PollForm()
+
+    return render(request, "polls/poll_form.html", {"form": form})
+   ```
+
+6. Ajout des choix pour la question créée via le formulaire :
+    ```
+   def get_question(request):
+    if request.method == "POST":
+        form = PollForm(request.POST)
+
+        if form.is_valid():
+            question_text = form.cleaned_data["question_text"]
+            choice_texts = request.POST.getlist("choice_text[]")
+
+            new_question = Question(question_text=question_text, pub_date=timezone.now())
+            new_question.save()
+            for choice_text in choice_texts:
+                if choice_text.strip():
+                    new_question.choice_set.create(question=new_question, choice_text=choice_text, votes=0)
+
+            return HttpResponseRedirect(reverse("polls:all"))
+
+    else:
+        form = PollForm()
+
+    return render(request, "polls/poll_form.html", {"form": form})
+   ```
+   ```
+   <form action="{% url 'polls:add' %}" method="post">
+      {% csrf_token %}
+      <div class="fieldWrapper">
+        {{ form.question_text.errors }}
+        {{ form.question_text.label_tag }}
+        {{ form.question_text }}
+      </div>
+      <div class="fieldWrapper">
+        <label for="choice1">Choix 1:</label>
+        <input type="text" name="choice_text[]" id="choice1">
+      </div>
+      <div class="fieldWrapper">
+        <label for="choice2">Choix 2:</label>
+        <input type="text" name="choice_text[]" id="choice2">
+      </div>
+      <div class="fieldWrapper">
+        <label for="choice3">Choix 3:</label>
+        <input type="text" name="choice_text[]" id="choice3">
+      </div>
+      <div class="fieldWrapper">
+        <label for="choice4">Choix 4:</label>
+        <input type="text" name="choice_text[]" id="choice4">
+      </div>
+      <div class="fieldWrapper">
+        <label for="choice4">Choix 5:</label>
+        <input type="text" name="choice_text[]" id="choice5">
+      </div>
+      <input type="submit" value="Add">
+    </form>
+   ```
