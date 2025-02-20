@@ -2,9 +2,14 @@
 
 {% block title %}Home{% endblock %}
 
+{% block header %}
+<div class="poll_header">
+    <h1>Bienvenue sur mon application de sondage</h1>
+</div>
+{% endblock %}
+
 {% block content %}
     <div class="poll_container">
-        <h1>Bienvenue sur mon application de sondage</h1>
 
         <a href="{% url 'polls:all' %}">Questions</a>
         <a href="{% url 'polls:statistics' %}">Statistiques</a>

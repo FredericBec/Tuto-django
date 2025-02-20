@@ -480,3 +480,92 @@ Ajout des balises dans chaque templates
     </div>
 {% endblock %}
 ```
+### Authentication
+
+Ajout d'un template de login
+```
+{% extends 'base.html' %}
+
+{% block title %}login{% endblock %}
+
+{% block header %}<h1>Connexion :</h1>{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'polls:login' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" name="username" id="username" required>
+    </div>
+    <div>
+        <label for="password">Mot de passe :</label>
+        <input type="text" name="password" id="password" required>
+    </div>
+    <button type="submit">Connexion</button>
+</form>
+{% if error_message %}
+<span>{{ error_message }}</span>
+{% endif %}
+{% endblock %}
+```
+
+Ajout des vues login et logout
+```
+def log_in(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        if username and password:
+            user = authenticate(request, username=username, password=password)
+            print(f"Utilisateur trouvé : {user}")
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse("polls:index"))
+            else:
+                return render(request, "authenticate/login.html", {"error_message": "You didn't enter a valid username or password"})
+
+    return render(request, "authenticate/login.html")
+
+
+def log_out(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("polls:index"))
+```
+
+Dans polls/urls.py
+```
+path("account/", views.log_in, name="login"),
+path("logout/", views.log_out, name="logout")
+```
+
+Dans settings.py
+```
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+```
+
+Dans base.html
+```
+<header>
+        {% block header %}{% endblock %}
+        {% if user.is_authenticated %}
+            <span>Hi, {{ user.username }}</span>
+            <button>
+                <a href="{% url 'polls:logout' %}">Déconnexion</a>
+            </button>
+        {% else %}
+            <a href="{% url 'polls:login' %}">Connexion</a>
+        {% endif %}
+</header>
+```
+
+Pour restreindre une vue à un utilisateur connecté
+```
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("polls:login"))
+```
+
+

@@ -1,5 +1,6 @@
 from email.policy import default
 
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Sum, Avg, Max
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -96,6 +97,9 @@ def statistics(request):
 
 
 def get_question(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("polls:login"))
+
     if request.method == "POST":
         form = PollForm(request.POST)
 
@@ -115,3 +119,25 @@ def get_question(request):
         form = PollForm()
 
     return render(request, "polls/poll_form.html", {"form": form})
+
+
+def log_in(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        if username and password:
+            user = authenticate(request, username=username, password=password)
+            print(f"Utilisateur trouvé : {user}")
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse("polls:index"))
+            else:
+                return render(request, "authenticate/login.html", {"error_message": "You didn't enter a valid username or password"})
+
+    return render(request, "authenticate/login.html")
+
+
+def log_out(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("polls:index"))

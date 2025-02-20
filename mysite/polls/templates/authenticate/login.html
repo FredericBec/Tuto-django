@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}login{% endblock %}
+
+{% block header %}<h1>Connexion :</h1>{% endblock %}
+
+{% block content %}
+
+<form action="{% url 'polls:login' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" name="username" id="username" required>
+    </div>
+    <div>
+        <label for="password">Mot de passe :</label>
+        <input type="text" name="password" id="password" required>
+    </div>
+    <button type="submit">Connexion</button>
+</form>
+{% if error_message %}
+<span>{{ error_message }}</span>
+{% endif %}
+{% endblock %}
