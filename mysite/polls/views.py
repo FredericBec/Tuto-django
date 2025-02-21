@@ -1,10 +1,11 @@
 from email.policy import default
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Sum, Avg, Max
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import generic
 
@@ -46,6 +47,12 @@ class FrequencyView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context["has_choices"] = self.object.get_choices()
         return context
+
+
+class RegisterView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("polls:index")
+    template_name = "authenticate/register.html"
 
 
 def vote(request, question_id):

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<h2>S'enregistrer</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">S'incrire</button>
+</form>
+{% endblock %}

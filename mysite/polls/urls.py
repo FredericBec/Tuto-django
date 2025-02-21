@@ -13,5 +13,6 @@ urlpatterns = [
     path("statistics/", views.statistics, name="statistics"),
     path("add/", views.get_question, name="add"),
     path("account/", views.log_in, name="login"),
-    path("logout/", views.log_out, name="logout")
+    path("logout/", views.log_out, name="logout"),
+    path("register/", views.RegisterView.as_view(), name="register"),
 ]

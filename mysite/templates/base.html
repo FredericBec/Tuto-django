@@ -8,15 +8,19 @@
 
 <body>
     <header>
-        {% block header %}{% endblock %}
-        {% if user.is_authenticated %}
-            <span>Hi, {{ user.username }}</span>
-            <button>
-                <a href="{% url 'polls:logout' %}">Déconnexion</a>
-            </button>
-        {% else %}
-            <a href="{% url 'polls:login' %}">Connexion</a>
-        {% endif %}
+        <div class="header_container">
+            {% block header %}{% endblock %}
+                <div class="auth_div">
+                    {% if user.is_authenticated %}
+                        <span>Hi, {{ user.username }}</span>
+                        <button>
+                            <a href="{% url 'polls:logout' %}">Déconnexion</a>
+                        </button>
+                    {% else %}
+                        <a href="{% url 'polls:login' %}">Connexion</a>
+                    {% endif %}
+                </div>
+        </div>
     </header>
 
     <main id="content">

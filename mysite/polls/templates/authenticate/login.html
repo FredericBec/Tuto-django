@@ -21,4 +21,10 @@
 {% if error_message %}
 <span>{{ error_message }}</span>
 {% endif %}
+
+<div>
+    <span>Pas de compte</span>
+    <a href="{% url 'polls:register' %}">S'enregister</a>
+</div>
+
 {% endblock %}

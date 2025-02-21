@@ -568,4 +568,42 @@ Pour restreindre une vue à un utilisateur connecté
         return HttpResponseRedirect(reverse("polls:login"))
 ```
 
+### Register
 
+Ajout d'un template register.html
+```
+{% extends 'base.html' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<h2>S'enregistrer</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">S'incrire</button>
+</form>
+{% endblock %}
+```
+
+Ajout d'une vue RegisterView
+```
+class RegisterView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("polls:index")
+    template_name = "authenticate/register.html"
+```
+
+Dans login.html
+```
+<div>
+    <span>Pas de compte</span>
+    <a href="{% url 'polls:register' %}">S'enregister</a>
+</div>
+```
+
+Dans polls/urls.py
+```
+path("register/", views.RegisterView.as_view(), name="register"),
+```
