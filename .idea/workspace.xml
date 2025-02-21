@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="update admin models">
+    <list default="true" id="8a5fbe0b-e24d-4cfe-b361-02c4d593d8b3" name="Changes" comment="add courses and update form">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/polls/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/polls/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/polls/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/polls/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysite/polls/templates/courses/courses.html" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/templates/courses/courses.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/polls/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/polls/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/polls/views.py" afterDir="false" />
     </list>
@@ -303,11 +300,18 @@
       <option name="project" value="LOCAL" />
       <updated>1740131553024</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="add courses and update form">
+      <option name="closed" value="true" />
+      <created>1740147266198</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1740147266198</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Configure database" />
     <MESSAGE value="Change timezone" />
     <MESSAGE value="Create models" />
     <MESSAGE value="Migrate models to db" />
@@ -332,6 +336,7 @@
     <MESSAGE value="Add user registration" />
     <MESSAGE value="Add course, teacher and learner models" />
     <MESSAGE value="update admin models" />
-    <option name="LAST_COMMIT_MESSAGE" value="update admin models" />
+    <MESSAGE value="add courses and update form" />
+    <option name="LAST_COMMIT_MESSAGE" value="add courses and update form" />
   </component>
 </project>

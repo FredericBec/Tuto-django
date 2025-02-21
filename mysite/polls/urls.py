@@ -17,5 +17,6 @@ urlpatterns = [
     path("register/", views.RegisterView.as_view(), name="register"),
     path("courses/", views.CourseView.as_view(), name="courses"),
     path("course_register/", views.LearnerRegister, name="course_register"),
-    path("add-course-question/", views.add_course_question, name="add_course_question")
+    path("add-course-question/", views.add_course_question, name="add_course_question"),
+    path("<int:course_id>/course-vote/", views.course_vote, name="course_vote")
 ]

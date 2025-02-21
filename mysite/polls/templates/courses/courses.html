@@ -23,7 +23,7 @@
                     <tr>
                         <td>{{ course.id }}</td>
                         <td>
-                            <a href="">{{ course.name }}</a>
+                            <a href="{% url 'polls:course_vote' course.id %}">{{ course.name }}</a>
                         </td>
                         <td>{{ course.teacher.user.username }}</td>
                         <td>{{ course.start_date }}</td>
