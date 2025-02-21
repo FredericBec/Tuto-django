@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Ajout d'une question{% endblock %}
+
+{% block header %}<h1>Ajout d'un sondage du cours :</h1>{% endblock %}
+
+{% block content %}
+<div class="form_container">
+    <form action="{% url 'polls:add_course_question' %}" method="post">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+            {{ form.question_text.errors }}
+            {{ form.question_text.label_tag }}
+            {{ form.question_text }}
+        </div>
+        <div class="fieldWrapper">
+            <label for="choice1">Choix 1:</label>
+            <input type="text" name="choice_text[]" id="choice1">
+        </div>
+        <div class="fieldWrapper">
+            <label for="choice2">Choix 2:</label>
+            <input type="text" name="choice_text[]" id="choice2">
+        </div>
+        <div class="fieldWrapper">
+            <label for="choice3">Choix 3:</label>
+            <input type="text" name="choice_text[]" id="choice3">
+        </div>
+        <div class="fieldWrapper">
+            <label for="choice4">Choix 4:</label>
+            <input type="text" name="choice_text[]" id="choice4">
+        </div>
+        <div class="fieldWrapper">
+            <label for="choice4">Choix 5:</label>
+            <input type="text" name="choice_text[]" id="choice5">
+        </div>
+        <div>
+            <label>Cours</label>
+            {{ form.course }}
+        </div>
+        <div class="form_button_div">
+           <input type="submit" value="Add" class="form_button">
+        </div>
+    </form>
+</div>
+{% endblock %}

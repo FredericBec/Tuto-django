@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<h2>S'enregistrer</h2>
+
+<form action="{% url 'polls:course_register' %}" method="post">
+    {% csrf_token %}
+    <div class="fieldWrapper">
+        <label>Nom d'utilisateur :</label>
+        {{ form.username }}
+    </div>
+    <div class="fieldWrapper">
+        <label >Mot de passe :</label>
+        {{ form.password1 }}
+    </div>
+    <div class="fieldWrapper">
+        <label>Confirmer le mot de passe :</label>
+        {{ form.password2 }}
+    </div>
+    <div class="fieldWrapper">
+        <label>Adresse :</label>
+        {{ form.address }}
+    </div>
+    <div class="fieldWrapper">
+        <label>Cours :</label>
+        {{ form.course }}
+    </div>
+    <button type="submit">S'incrire</button>
+</form>
+{% endblock %}

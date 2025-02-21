@@ -15,8 +15,33 @@ def text_excerpt(text, max_length):
     return text[:max_length] + ('...' if len(text) > max_length else '')
 
 
+class Learner(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    address = models.TextField()
+
+
+class Teacher(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    hiring_date = models.DateTimeField("Hiring date")
+
+    def __str__(self):
+        return self.user.username
+
+
+class Course(models.Model):
+    teacher = models.ForeignKey(Teacher, related_name="courses", on_delete=models.CASCADE)
+    learners = models.ManyToManyField(Learner, related_name="courses")
+    name = models.CharField(max_length=100)
+    start_date = models.DateTimeField("Starting date")
+    end_date = models.DateTimeField("Ending date")
+
+    def __str__(self):
+        return self.name
+
+
 class Question(models.Model):
     """Question entity"""
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
 
@@ -64,24 +89,3 @@ class Choice(models.Model):
 
     def __str__(self):
         return text_excerpt(self.choice_text, MAX_LENGTH)
-
-
-class Learner(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    address = models.TextField()
-
-
-class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    hiring_date = models.DateTimeField("Hiring date")
-
-    def __str__(self):
-        return self.user.username
-
-
-class Course(models.Model):
-    teacher = models.ForeignKey(Teacher, related_name="courses", on_delete=models.CASCADE)
-    learners = models.ManyToManyField(Learner, related_name="courses")
-    name = models.CharField(max_length=100)
-    start_date = models.DateTimeField("Starting date")
-    end_date = models.DateTimeField("Ending date")

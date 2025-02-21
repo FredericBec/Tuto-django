@@ -15,4 +15,7 @@ urlpatterns = [
     path("account/", views.log_in, name="login"),
     path("logout/", views.log_out, name="logout"),
     path("register/", views.RegisterView.as_view(), name="register"),
+    path("courses/", views.CourseView.as_view(), name="courses"),
+    path("course_register/", views.LearnerRegister, name="course_register"),
+    path("add-course-question/", views.add_course_question, name="add_course_question")
 ]

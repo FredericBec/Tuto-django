@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Cours{% endblock %}
+
+{% block header %}<h1>Liste des cours disponibles</h1>{% endblock %}
+
+{% block content %}
+<div class="course_list">
+    {% if latest_course_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Nom</th>
+                    <th>Enseignant</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Inscrit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in latest_course_list %}
+                    <tr>
+                        <td>{{ course.id }}</td>
+                        <td>
+                            <a href="">{{ course.name }}</a>
+                        </td>
+                        <td>{{ course.teacher.user.username }}</td>
+                        <td>{{ course.start_date }}</td>
+                        <td>{{ course.end_date }}</td>
+                        {% if course in taken_courses %}
+                        <td>Oui</td>
+                        {% else %}
+                        <td>Non</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
+    {% if request.user.teacher %}
+    <a href="{% url 'polls:add_course_question' %}">Ajouter un sondage à un cours</a>
+    {% endif %}
+    <a href="{% url 'polls:course_register' %}">S'inscrire à un cours</a>
+</div>
+{% endblock %}

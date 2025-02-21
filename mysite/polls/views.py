@@ -1,16 +1,18 @@
 from email.policy import default
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, Avg, Max
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import generic
 
-from .form import PollForm
-from .models import Question, Choice
+from .form import PollForm, LearnerRegisterForm, CourseQuestionForm
+from .models import Question, Choice, Course, Learner
 
 
 class IndexView(generic.TemplateView):
@@ -53,6 +55,29 @@ class RegisterView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("polls:index")
     template_name = "authenticate/register.html"
+
+
+class CourseView(LoginRequiredMixin, generic.ListView):
+    login_url = "/polls/course_register/"
+    template_name = "courses/courses.html"
+    context_object_name = "latest_course_list"
+
+    def get_queryset(self):
+        return Course.objects.filter(start_date__lte=timezone.now()).order_by("start_date")[:10]
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        learner = Learner.objects.filter(user=self.request.user).first()
+
+        if learner:
+            taken_courses = learner.courses.all()
+        else:
+            taken_courses = []
+
+        context["taken_courses"] = taken_courses
+        return context
+
+
 
 
 def vote(request, question_id):
@@ -107,6 +132,9 @@ def get_question(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("polls:login"))
 
+    if not hasattr(request.user, "teacher"):
+        return HttpResponseForbidden("Vous n'avez pas la permission d'accéder à cette page.")
+
     if request.method == "POST":
         form = PollForm(request.POST)
 
@@ -135,7 +163,6 @@ def log_in(request):
 
         if username and password:
             user = authenticate(request, username=username, password=password)
-            print(f"Utilisateur trouvé : {user}")
             if user is not None:
                 login(request, user)
                 return HttpResponseRedirect(reverse("polls:index"))
@@ -148,3 +175,54 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return HttpResponseRedirect(reverse("polls:index"))
+
+
+def LearnerRegister(request):
+    if request.method == "POST":
+        form = LearnerRegisterForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            address = form.cleaned_data["address"]
+            course = form.cleaned_data["course"]
+
+            learner = Learner.objects.create(user=user, address=address)
+
+            if course:
+                learner.courses.set(course)
+
+            login(request, user)
+            return HttpResponseRedirect(reverse("polls:courses"))
+    else:
+        form = LearnerRegisterForm()
+
+    return render(request, "courses/course_register.html", {"form": form})
+
+
+def add_course_question(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("polls:login"))
+
+    if not hasattr(request.user, "teacher"):
+        return HttpResponseForbidden("Vous n'avez pas la permission d'accéder à cette page.")
+
+    if request.method == "POST":
+        form = CourseQuestionForm(request.POST)
+
+        if form.is_valid():
+            course = form.cleaned_data["course"]
+            question_text = form.cleaned_data["question_text"]
+            choice_texts = request.POST.getlist("choice_text[]")
+
+            new_question = Question(course=course, question_text=question_text, pub_date=timezone.now())
+            new_question.save()
+            for choice_text in choice_texts:
+                if choice_text.strip():
+                    new_question.choice_set.create(question=new_question, choice_text=choice_text, votes=0)
+
+            return HttpResponseRedirect(reverse("polls:courses"))
+
+    else:
+        form = CourseQuestionForm()
+
+    return render(request, "courses/add_course_question.html", {"form": form})
