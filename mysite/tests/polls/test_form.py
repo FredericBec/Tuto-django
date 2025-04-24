@@ -3,6 +3,7 @@ from datetime import datetime
 import pytest
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.timezone import make_aware
 
 from polls.form import PollForm, LearnerRegisterForm, CourseQuestionForm
 from polls.models import Course, Teacher
@@ -15,8 +16,9 @@ def course():
     :return: l'objet course
     """
     user = User.objects.create(username='prof', password='profmdp')
-    teacher = Teacher.objects.create(user=user, hiring_date=datetime(2000, 9, 1))
-    course = Course.objects.create(name='maths', start_date=datetime(2000, 9, 1), end_date=datetime(2001, 6, 20),
+    teacher = Teacher.objects.create(user=user, hiring_date=make_aware(datetime(2000, 9, 1)))
+    course = Course.objects.create(name='maths', start_date=make_aware(datetime(2000, 9, 1)),
+                                   end_date=make_aware(datetime(2001, 6, 20)),
                                    teacher=teacher)
     return course
 
