@@ -25,7 +25,7 @@ def test_learner(user):
 
 @pytest.mark.django_db
 def test_teacher_str(user):
-    teacher = Teacher.objects.create(user=user, hiring_date=datetime(2000, 7, 2))
+    teacher = Teacher.objects.create(user=user, hiring_date=make_aware(datetime(2000, 7, 2)))
 
     assert str(teacher) == "test"
 
