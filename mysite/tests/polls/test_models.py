@@ -17,7 +17,7 @@ def user():
 
 @pytest.mark.django_db
 def test_learner(user):
-    learner = Learner(user=user, address="5 rue des templiers 31000 Toulouse")
+    learner = Learner.objects.create(user=user, address="5 rue des templiers 31000 Toulouse")
 
     assert learner.user.username == "test"
     assert learner.address == "5 rue des templiers 31000 Toulouse"
@@ -25,7 +25,7 @@ def test_learner(user):
 
 @pytest.mark.django_db
 def test_teacher_str(user):
-    teacher = Teacher(user=user, hiring_date=datetime(2000, 7, 2))
+    teacher = Teacher.objects.create(user=user, hiring_date=datetime(2000, 7, 2))
 
     assert str(teacher) == "test"
 
