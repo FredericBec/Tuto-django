@@ -5,4 +5,5 @@ from django.urls import path, include
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
 ] + debug_toolbar_urls()
