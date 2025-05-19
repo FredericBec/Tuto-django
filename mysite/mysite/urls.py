@@ -3,10 +3,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from polls.api_views import QuestionViewset
+from polls.api_views import QuestionViewset, ChoiceViewset
 
 router = routers.SimpleRouter()
 router.register('question', QuestionViewset, basename='question')
+router.register('choice', ChoiceViewset, basename='choice')
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
