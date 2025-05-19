@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .api_views import QuestionAPIView
 
 app_name = "polls"
 urlpatterns = [
@@ -18,5 +19,6 @@ urlpatterns = [
     path("courses/", views.CourseView.as_view(), name="courses"),
     path("course_register/", views.LearnerRegister, name="course_register"),
     path("add-course-question/", views.add_course_question, name="add_course_question"),
-    path("<int:course_id>/course-vote/", views.course_vote, name="course_vote")
+    path("<int:course_id>/course-vote/", views.course_vote, name="course_vote"),
+    path("api/question/", QuestionAPIView.as_view())
 ]
