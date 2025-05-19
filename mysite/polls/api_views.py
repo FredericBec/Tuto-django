@@ -1,13 +1,12 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from polls.models import Question
 from polls.serializers.serializers import QuestionSerializer
 
 
-class QuestionAPIView(APIView):
+class QuestionViewset(ReadOnlyModelViewSet):
 
-    def get(self, *args, **kwargs):
-        questions = Question.objects.all()
-        serializer = QuestionSerializer(questions, many=True)
-        return Response(serializer.data)
+    serializer_class = QuestionSerializer
+
+    def get_queryset(self):
+        return Question.objects.all()
