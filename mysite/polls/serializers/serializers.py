@@ -9,12 +9,22 @@ class ChoiceSerializer(serializers.ModelSerializer):
         model = Choice
         fields = ['question', 'choice_text', 'votes']
 
+    def validate(self, data):
+        if data['votes'] < 0:
+            raise serializers.ValidationError('You can not enter a negative value')
+        return data
+
 
 class QuestionListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
         fields = ['question_text', 'pub_date', 'course']
+
+    def validate_question_text(self, value):
+        if Question.objects.filter(question_text=value).exists():
+            raise serializers.ValidationError('Question already exits')
+        return value
 
 
 class QuestionDetailSerializer(serializers.ModelSerializer):

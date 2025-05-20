@@ -4,7 +4,17 @@ from polls.models import Question, Choice
 from polls.serializers.serializers import ChoiceSerializer, QuestionListSerializer, QuestionDetailSerializer
 
 
-class QuestionViewset(ReadOnlyModelViewSet):
+class MultipleSerializerMixin:
+
+    detail_serializer_class = None
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve' and self.detail_serializer_class is not None:
+            return self.detail_serializer_class
+        return super().get_serializer_class()
+
+
+class QuestionViewset(MultipleSerializerMixin, ReadOnlyModelViewSet):
 
     serializer_class = QuestionListSerializer
 
@@ -12,11 +22,6 @@ class QuestionViewset(ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return Question.objects.all()
-
-    def get_serializer_class(self):
-        if self.action == 'retrieve':
-            return self.detail_serializer_class
-        return super().get_serializer_class()
 
 
 class ChoiceViewset(ReadOnlyModelViewSet):
@@ -29,3 +34,18 @@ class ChoiceViewset(ReadOnlyModelViewSet):
         if question_id is not None:
             queryset = queryset.filter(question_id=question_id)
         return queryset
+
+
+class AdminQuestionViewset(MultipleSerializerMixin, ModelViewSet):
+    serializer_class = QuestionListSerializer
+    detail_serializer_class = QuestionDetailSerializer
+
+    def get_queryset(self):
+        return Question.objects.all()
+
+
+class AdminChoiceViewset(ModelViewSet):
+    serializer_class = ChoiceSerializer
+
+    def get_queryset(self):
+        return Choice.objects.all()
