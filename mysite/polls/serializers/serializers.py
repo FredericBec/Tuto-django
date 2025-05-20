@@ -3,11 +3,18 @@ from rest_framework import serializers
 from polls.models import Question, Choice, Course
 
 
-class ChoiceSerializer(serializers.ModelSerializer):
+class ChoiceListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Choice
         fields = ['question', 'choice_text', 'votes']
+
+
+class ChoiceDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Choice
+        fields = ['choice_text', 'votes']
 
     def validate(self, data):
         if data['votes'] < 0:
@@ -37,7 +44,7 @@ class QuestionDetailSerializer(serializers.ModelSerializer):
 
     def get_choices(self, instance):
         queryset = instance.choices
-        serializer = ChoiceSerializer(queryset, many=True)
+        serializer = ChoiceListSerializer(queryset, many=True)
         return serializer.data
 
 
