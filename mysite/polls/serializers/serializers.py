@@ -1,25 +1,30 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 from polls.models import Question, Choice, Course
 
 
-class QuestionSerializer(ModelSerializer):
-
-    class Meta:
-        model = Question
-        fields = ['question_text', 'pub_date', 'course']
-
-
-class ChoiceSerializer(ModelSerializer):
-
-    question = QuestionSerializer()
+class ChoiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Choice
         fields = ['question', 'choice_text', 'votes']
 
 
-class CourseSerializer(ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
+
+    choices = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = ['question_text', 'pub_date', 'course', 'choices']
+
+    def get_choices(self, instance):
+        queryset = instance.choices
+        serializer = ChoiceSerializer(queryset, many=True)
+        return serializer.data
+
+
+class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
