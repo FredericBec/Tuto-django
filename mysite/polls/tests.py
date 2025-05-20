@@ -7,7 +7,7 @@ from django.utils.timezone import localtime
 from rest_framework.reverse import reverse_lazy
 from rest_framework.test import APITestCase
 
-from .models import Question
+from .models import Question, Choice
 
 
 class QuestionModelTests(TestCase):
@@ -129,13 +129,21 @@ class QuestionDetailViewTests(TestCase):
         self.assertContains(response, past_question.question_text)
 
 
-class QuestionApiTests(APITestCase):
+class PollsApiTestCase(APITestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.question = create_question(question_text='Quel est votre couleur préférée?', days=1)
+        cls.choice = Choice.objects.create(question=cls.question, choice_text='nouveau choix', votes=0)
+        cls.question_2 = create_question(question_text='zero + zero?', days=2)
+        cls.choice_2 = Choice.objects.create(question=cls.question_2, choice_text='tête à toto', votes=1)
+
+
+class QuestionApiTests(PollsApiTestCase):
 
     url = reverse_lazy('question-list')
 
     def test_question_list(self):
-
-        question = create_question(question_text='Quel est votre couleur préférée?', days=1)
 
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
@@ -144,14 +152,50 @@ class QuestionApiTests(APITestCase):
                 'question_text': question.question_text,
                 'pub_date': localtime(question.pub_date).isoformat(),
                 'course': None
-            }
+            } for question in [self.question, self.question_2]
         ]
         self.assertEqual(excepted, response.json())
 
     def test_create_question(self):
 
-        self.assertFalse(Question.objects.exists())
+        question_count = Question.objects.count()
 
         response = self.client.post(self.url, data={'question_text': 'nouvelle question', 'pub_date': '2025-01-20'})
         self.assertEqual(response.status_code, 405)
-        self.assertFalse(Question.objects.exists())
+        self.assertEqual(Question.objects.count(), question_count)
+
+
+class ChoiceApiTests(PollsApiTestCase):
+
+    url = reverse_lazy('choice-list')
+
+    @staticmethod
+    def get_choice_list_data(choices):
+        return [
+            {
+                'question': choice.question.pk,
+                'choice_text': choice.choice_text,
+                'votes': choice.votes
+            } for choice in choices
+        ]
+
+    def test_choice_list(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.get_choice_list_data([self.choice, self.choice_2]), response.json())
+
+    def test_choice_list_filter(self):
+        response = self.client.get(self.url + f'?question_id={self.question.pk}')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(self.get_choice_list_data([self.choice]), response.json())
+
+    def test_create_choice(self):
+        choice_count = Choice.objects.count()
+        response = self.client.post(self.url, data={'choice_text': 'nouveau choix', 'votes': 0})
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(Choice.objects.count(), choice_count)
+
+    def test_delete_choice(self):
+        response = self.client.delete(reverse('choice-detail', kwargs={'pk': self.choice.pk}))
+        self.assertEqual(response.status_code, 405)
+        self.choice.refresh_from_db()
