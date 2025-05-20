@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from polls.models import Question, Choice
@@ -40,12 +41,16 @@ class AdminQuestionViewset(MultipleSerializerMixin, ModelViewSet):
     serializer_class = QuestionListSerializer
     detail_serializer_class = QuestionDetailSerializer
 
+    permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         return Question.objects.all()
 
 
 class AdminChoiceViewset(ModelViewSet):
     serializer_class = ChoiceSerializer
+
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Choice.objects.all()
