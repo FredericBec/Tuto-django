@@ -3,6 +3,9 @@ import datetime
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.timezone import localtime
+from rest_framework.reverse import reverse_lazy
+from rest_framework.test import APITestCase
 
 from .models import Question
 
@@ -124,3 +127,31 @@ class QuestionDetailViewTests(TestCase):
         url = reverse("polls:detail", args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class QuestionApiTests(APITestCase):
+
+    url = reverse_lazy('question-list')
+
+    def test_question_list(self):
+
+        question = create_question(question_text='Quel est votre couleur préférée?', days=1)
+
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        excepted = [
+            {
+                'question_text': question.question_text,
+                'pub_date': localtime(question.pub_date).isoformat(),
+                'course': None
+            }
+        ]
+        self.assertEqual(excepted, response.json())
+
+    def test_create_question(self):
+
+        self.assertFalse(Question.objects.exists())
+
+        response = self.client.post(self.url, data={'question_text': 'nouvelle question', 'pub_date': '2025-01-20'})
+        self.assertEqual(response.status_code, 405)
+        self.assertFalse(Question.objects.exists())
