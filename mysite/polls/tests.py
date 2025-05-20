@@ -134,9 +134,27 @@ class PollsApiTestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.question = create_question(question_text='Quel est votre couleur préférée?', days=1)
-        cls.choice = Choice.objects.create(question=cls.question, choice_text='nouveau choix', votes=0)
+        cls.choice = cls.question.choices.create(question=cls.question, choice_text='nouveau choix', votes=0)
         cls.question_2 = create_question(question_text='zero + zero?', days=2)
-        cls.choice_2 = Choice.objects.create(question=cls.question_2, choice_text='tête à toto', votes=1)
+        cls.choice_2 = cls.question_2.choices.create(question=cls.question_2, choice_text='tête à toto', votes=1)
+
+    def get_choice_list_data(self, choices):
+        return [
+            {
+                'question': choice.question.pk,
+                'choice_text': choice.choice_text,
+                'votes': choice.votes
+            } for choice in choices
+        ]
+
+    def get_question_list_data(self, questions):
+        return [
+            {
+                'question_text': question.question_text,
+                'pub_date': localtime(question.pub_date).isoformat(),
+                'course': None
+            } for question in questions
+        ]
 
 
 class QuestionApiTests(PollsApiTestCase):
@@ -147,14 +165,7 @@ class QuestionApiTests(PollsApiTestCase):
 
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
-        excepted = [
-            {
-                'question_text': question.question_text,
-                'pub_date': localtime(question.pub_date).isoformat(),
-                'course': None
-            } for question in [self.question, self.question_2]
-        ]
-        self.assertEqual(excepted, response.json())
+        self.assertEqual(response.json()['results'], self.get_question_list_data([self.question, self.question_2]))
 
     def test_create_question(self):
 
@@ -169,25 +180,15 @@ class ChoiceApiTests(PollsApiTestCase):
 
     url = reverse_lazy('choice-list')
 
-    @staticmethod
-    def get_choice_list_data(choices):
-        return [
-            {
-                'question': choice.question.pk,
-                'choice_text': choice.choice_text,
-                'votes': choice.votes
-            } for choice in choices
-        ]
-
     def test_choice_list(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.get_choice_list_data([self.choice, self.choice_2]), response.json())
+        self.assertEqual(self.get_choice_list_data([self.choice, self.choice_2]), response.json()['results'])
 
     def test_choice_list_filter(self):
         response = self.client.get(self.url + f'?question_id={self.question.pk}')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.get_choice_list_data([self.choice]), response.json())
+        self.assertEqual(self.get_choice_list_data([self.choice]), response.json()['results'])
 
     def test_create_choice(self):
         choice_count = Choice.objects.count()

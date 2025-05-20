@@ -10,7 +10,14 @@ class ChoiceSerializer(serializers.ModelSerializer):
         fields = ['question', 'choice_text', 'votes']
 
 
-class QuestionSerializer(serializers.ModelSerializer):
+class QuestionListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Question
+        fields = ['question_text', 'pub_date', 'course']
+
+
+class QuestionDetailSerializer(serializers.ModelSerializer):
 
     choices = serializers.SerializerMethodField()
 
